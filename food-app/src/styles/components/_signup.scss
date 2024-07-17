@@ -1,0 +1,34 @@
+@import '../utils/variables';
+
+:root{
+    --form-width:500px;
+}
+.signup-form{
+    max-width:var(--form-width);
+    margin: 0 auto;
+    background-color: lightblue;
+    display: grid;
+    gap: 15px;
+    padding: 20px 15px;
+    border-radius: 5px;
+
+    > *{
+        display: flex;
+        flex-direction: column;
+       > *{
+        display: block;
+        &:first-child{
+            align-self: flex-start;
+            margin-bottom: 5px;
+        }
+        &:last-child{
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            &:focus{
+                outline: 2px solid $light-green;
+            }
+        }
+       }
+    }
+}
