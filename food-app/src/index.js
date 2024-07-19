@@ -11,6 +11,8 @@ import ProductListing  from "./Pages/ProductListing";
 import Resister from "./Pages/Resister";
 import Services from './Pages/Services';
 import About from './Pages/About';
+import Signup from './Models/Signup';
+
 
 const router = createBrowserRouter([
   {
@@ -28,8 +30,8 @@ const router = createBrowserRouter([
      
       },
       {
-        path: "/resister",
-        element: <Resister />,
+        path: "/signup",
+        element: <Signup />,
      
       },
       {
