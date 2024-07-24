@@ -12,36 +12,36 @@ import Resister from "./Pages/Resister";
 import Services from './Pages/Services';
 import About from './Pages/About';
 import Signup from './Models/Signup';
+import ProtectedRoute from './Components/ProtectedRoutes';
+import Login from './Models/Login';
 
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <App />,
+    path:"/",
+    element:<App/>,
     children: [
       {
-        path: "/",
-        element: <Home />,
-     
+        path: "/signup",
+        element:<Signup/>,
+      },
+      {
+        path: "/login",
+        element:<Login/>,
       },
       {
         path: "/products",
-        element: <ProductListing />,
-     
-      },
-      {
-        path: "/signup",
-        element: <Signup />,
+        element:<ProtectedRoute><ProductListing /></ProtectedRoute> ,
      
       },
       {
         path: "/services",
-        element: <Services />,
+        element: <ProtectedRoute><Services /></ProtectedRoute>
      
       },
       {
         path: "/about-us",
-        element: <About />,
+        element: <ProtectedRoute><About /></ProtectedRoute>,
      
       },
     ],
