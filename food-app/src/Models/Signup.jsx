@@ -1,7 +1,10 @@
 import React from 'react'
 import { useState } from 'react'
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 function Signup() {
+    const navigate = useNavigate();
+
     const [userData, setUserData] = useState({
         firstName: '',
         lastName: '',
@@ -21,10 +24,14 @@ function Signup() {
 
     const HandleSubmit = (e) => {
         e.preventDefault();
-        console.log(userData);
-        if(formValidation(userData)){
-        localStorage.setItem('email', userData['email']);
-        localStorage.setItem('password', userData['password']);}
+        const isValid = formValidation(userData);
+        console.log(isValid);
+        if (!isValid) {
+            console.log(userData);
+            localStorage.setItem('email', userData['email']);
+            localStorage.setItem('password', userData['password']);
+            navigate('/login')
+        }
     }
     const formValidation = (userData) => {
         const errors = {};
@@ -51,6 +58,7 @@ function Signup() {
             }
         }
         setErrMsg(errors)
+        return errors
     }
 
     return (
@@ -74,6 +82,9 @@ function Signup() {
                 <label htmlFor="password">Password</label>
                 <input onChange={HandleChange} value={userData.password} name='password' type="password" id='password' placeholder='********' />
                 {errMsg.password && <span className='errorMsg'>{errMsg.password}</span>}
+            </div>
+            <div className="submit">
+                <p>Already registered ?<Link to='/login' className='login-signup_link'> Login here</Link> </p>
             </div>
             <div className="submit">
                 <button className='submit-btn' type='submit'>Create Account</button>
