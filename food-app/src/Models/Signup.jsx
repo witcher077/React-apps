@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom';
+import Login from './Login';
 
 function Signup() {
     const navigate = useNavigate();
@@ -24,13 +25,13 @@ function Signup() {
 
     const HandleSubmit = (e) => {
         e.preventDefault();
-        const isValid = formValidation(userData);
+        const isValid = Object.keys(formValidation(userData)).length === 0;
         console.log(isValid);
-        if (!isValid) {
+        if (isValid) {
             console.log(userData);
+            navigate("/login")
             localStorage.setItem('email', userData['email']);
             localStorage.setItem('password', userData['password']);
-            navigate('/login')
         }
     }
     const formValidation = (userData) => {
