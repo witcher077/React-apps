@@ -5,15 +5,20 @@ import reportWebVitals from './reportWebVitals';
 import {RouterProvider,} from "react-router-dom";
 
 import {createBrowserRouter} from "react-router-dom";
+import {ToastContainer} from "react-toastify"
 
 import  Home from "./Pages/Home";
 import ProductListing  from "./Pages/ProductListing";
-import Resister from "./Pages/Resister";
 import Services from './Pages/Services';
-import About from './Pages/About';
+import Cart from './Pages/Cart';
 import Signup from './Models/Signup';
 import ProtectedRoute from './Components/ProtectedRoutes';
 import Login from './Models/Login';
+import Profile from './Components/profile/Profile';
+import './index.css';
+import AddTask from './Pages/taskPage/addTask';
+import ProductdetailsPage from './Pages/ProductdetailsPage';
+
 
 
 const router = createBrowserRouter([
@@ -22,12 +27,31 @@ const router = createBrowserRouter([
     element:<App/>,
     children: [
       {
+        path: "/",
+        element:<Home/>,
+      },
+      {
         path: "/signup",
         element:<Signup/>,
       },
       {
         path: "/login",
         element:<Login/>,
+      },
+      {
+        path: "/profile",
+        element:<ProtectedRoute><Profile /></ProtectedRoute> ,
+     
+      },
+      {
+        path: "/addTask",
+        element:<ProtectedRoute><AddTask /></ProtectedRoute> ,
+     
+      },
+      {
+        path: "/Pdetails/:Id",
+        element:<ProtectedRoute><ProductdetailsPage /></ProtectedRoute> ,
+     
       },
       {
         path: "/products",
@@ -40,8 +64,8 @@ const router = createBrowserRouter([
      
       },
       {
-        path: "/about-us",
-        element: <ProtectedRoute><About /></ProtectedRoute>,
+        path: "/cart",
+        element: <ProtectedRoute><Cart /></ProtectedRoute>,
      
       },
     ],
@@ -51,6 +75,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
    <RouterProvider router={router} />
+   <ToastContainer/>
   </React.StrictMode>
 );
 

@@ -1,0 +1,130 @@
+.product-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-rows: repeat(auto-fill, minmax(150px,1fr));
+
+
+    @media only screen and (max-width:767px) {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        grid-template-rows: repeat(auto-fill, minmax(150px,1fr));
+
+    }
+    
+    .card {
+
+        max-width: 280px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        padding: 10px;
+        gap: 10px;
+        transition: .25s ease;
+        img{
+            height: 200px;
+        }
+        &:hover {
+            cursor: pointer;
+
+            .details {
+                .tittle {
+                    color: #04af2f;
+                }
+            }
+        }
+
+        .details {
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 10px;
+            h1,h2,h3,h4,h5,h6{
+                margin: 0;
+            }
+
+            .tittle {
+                color: black;
+                font-size: 15px;
+                font-weight: 600;
+                --max-line: 1;
+                display: -webkit-box;
+                overflow: hidden;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: var(--max-line);
+            }
+
+            .discription {
+                font-size: 12px;
+                color: rgb(22, 22, 73);
+                text-align: center;
+                --max-line: 3;
+                display: -webkit-box;
+                overflow: hidden;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: var(--max-line);
+                margin: 0;
+
+            }
+
+            .price-and-rating {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                color: green;
+                font-style: italic;
+                font-weight: bold;
+                h3{
+                    font-size: 20px;
+                    font-weight: 900;
+                }
+                h5{
+                    font-size: 13px;
+                    font-weight: 900;
+                }
+
+                .red {
+                    color: red;
+                }
+
+            }
+
+      
+        }
+        button {
+            color: #fff;
+            background-color: #2c9d30;
+            font-size: 15px;
+            border: 0;
+            border-radius: 5px;
+            padding: 10px;
+
+            &:hover {
+                background-color: #04af2f;
+            }
+        }
+        @media only screen and (max-width:767px) {
+            img {
+                width: 120px;
+                height: 100px;
+            }
+
+            .details {
+                .tittle {
+                    font-size: 10px;
+                }
+
+                .discription {
+                    font-size: 8px;
+                }
+
+                button {
+                    font-size: 10px;
+                    padding: 5px;
+                }
+            }
+
+        }
+    }
+}

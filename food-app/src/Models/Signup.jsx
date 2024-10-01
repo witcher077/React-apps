@@ -1,7 +1,8 @@
 import React from 'react'
 import { useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom';
-import Login from './Login';
+import axios from "axios";
+import {toast } from 'react-toastify';
 
 function Signup() {
     const navigate = useNavigate();
@@ -23,15 +24,49 @@ function Signup() {
         })
     }
 
-    const HandleSubmit = (e) => {
+    const HandleSubmit = async (e) => {
         e.preventDefault();
-        const isValid = Object.keys(formValidation(userData)).length === 0;
+        const isValid = Object.keys(formValidation(userData)).length === 0 ? true : false;
         console.log(isValid);
         if (isValid) {
-            console.log(userData);
+            try {
+                await axios.post("http://localhost:8000/signup", userData)
+                    .then(res => {
+                        if (res.data === "exist") {
+                            toast.info('😲 User Already exixt', {
+                                position: "top-left",
+                                autoClose: 5000,
+                                hideProgressBar: false,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                                theme: "colored"
+                                });
+                            
+                            navigate("/login")
+                        }
+                        else{
+                            toast.success('😊 User Resistered Successfully', {
+                                position: "top-right",
+                                autoClose: 2000,
+                                hideProgressBar: false,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                                theme: "colored",
+                                });
+                            navigate("/login")
+                        }
+                    })
+            }
+            catch (e) {
+                alert(e)
+            }
+
             navigate("/login")
-            localStorage.setItem('email', userData['email']);
-            localStorage.setItem('password', userData['password']);
+            
         }
     }
     const formValidation = (userData) => {

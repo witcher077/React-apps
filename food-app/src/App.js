@@ -1,15 +1,22 @@
 import './styles/index.scss';
 import { Outlet } from 'react-router-dom';
-import { useNavigate } from "react-router-dom";
 import Header from './Components/Header';
 import Footer from './Components/Footer';
-import { useState } from 'react';
+import UserContextProvider from './AuthContext/userContextProvider';
+import ProductCtxProvider from './Context/productCtxProvider';
+import { CartCtxProvider } from './Context/cartCtxProvider';
 function App() {
-  return (<div className='app'>
-    <Header />
-    <Outlet />
-    <Footer />
-  </div>);
+
+  return (<ProductCtxProvider >
+    <UserContextProvider className='app'>
+      <CartCtxProvider>
+        <Header />
+        <Outlet />
+        <Footer />
+      </CartCtxProvider>
+    </UserContextProvider>
+  </ProductCtxProvider>)
+    ;
 }
 
 export default App;

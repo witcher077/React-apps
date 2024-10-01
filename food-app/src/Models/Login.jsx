@@ -1,10 +1,14 @@
-import React from 'react'
-import { useState } from 'react';
-import { Link,useNavigate } from 'react-router-dom';
+import axios from "axios";
+import React, { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import UserContext from '../AuthContext/userContext';
 
+import {toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
   const navigate = useNavigate();
+  const { setUser, setIsloggedIn } = useContext(UserContext);
   const [userData, setUserData] = useState({
     email: '',
     password: ''
@@ -20,14 +24,52 @@ function Login() {
     })
   }
 
-  const HandleSubmit = (e) => {
+  const HandleSubmit = async (e) => {
     e.preventDefault();
-    const isValid = Object.keys(formValidation(userData)).length === 0;
-    console.log(isValid);
+    const isValid = Object.keys(formValidation(userData)).length === 0 ;
     if (isValid) {
-      sessionStorage.setItem('email', userData['email']);
-      sessionStorage.setItem('password', userData['password']);
-      navigate('/');
+      try {
+        await axios.post("http://localhost:8000/login", userData)
+          .then(res => {
+            console.log(res.data)
+            if (res.data === "do not exist") {
+              toast.error('User do not exist', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                });
+              navigate("/signup")
+            }
+            else {
+              toast.success('🎊 LoggedIn Succesfully', {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                });
+              setIsloggedIn(true);
+              localStorage.setItem("firstName",res.data.firstName)
+              localStorage.setItem("lastName",res.data.lastName)
+              localStorage.setItem("email",res.data.email)
+              setUser(localStorage.getItem("firstName"))
+              navigate('/');
+            }
+          })
+      }
+      catch (e) {
+        alert(e)
+      }
+      // const user=localStorage.getItem('name');
+   
     }
   }
   const formValidation = (userData) => {
@@ -52,7 +94,7 @@ function Login() {
     return errors;
   }
 
-  return (
+  return (<>
     <form className='signup-form' onSubmit={HandleSubmit} >
       <div className="email-label">
         <label htmlFor="email">Email</label>
@@ -68,9 +110,11 @@ function Login() {
         <p>Don't have an account?<Link to='/signup' className='login-signup_link'> Register here</Link> </p>
       </div>
       <div className="submit">
-        <button className='submit-btn' type='submit'>Login</button>
+        <button className='submit-btn text-orange-900 bg-lime-400' type='submit'>Login</button>
       </div>
     </form>
+    
+    </>
   )
 }
 
